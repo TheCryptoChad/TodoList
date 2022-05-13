@@ -1,6 +1,6 @@
 # React To-Do List
 
-This project is a To-Do List app made using React Hooks and styled using Bootstrap. 
+This project is a To-Do List app made using React Hooks and styled using [Bootstrap](https://react-bootstrap.github.io). 
 
 ## Prerequisite
 
@@ -32,8 +32,6 @@ npm start
 
 The app is capable of receiving user input via a Bootstrap `Form` that takes a `Task`, a `Date`, and a `Time` in order to create the list.
 
-gif
-
 ### Button Functionality
 
 - #### Submit
@@ -52,7 +50,7 @@ function addTodo(e) {
 }
 ``` 
 
-gif
+![gif](./submit.gif)
 
 - #### Delete
 
@@ -64,7 +62,7 @@ function deleteTodo(e) {
 }
 ``` 
 
-gif
+![gif](./delete.gif)
 
 ### LocalStorage
 
@@ -76,3 +74,5 @@ useEffect(() => {
   localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(todoList));
 }, [todoList]);
 ```
+
+![gif](./localstorage.gif)
