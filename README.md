@@ -1,70 +1,78 @@
-# Getting Started with Create React App
+# React To-Do List
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is a To-Do List app made using React Hooks and styled using Bootstrap. 
 
-## Available Scripts
+## Prerequisite
 
-In the project directory, you can run:
+- Node.js
+- npm or yarn
 
-### `npm start`
+## Demo
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+A fully usable version of the app is hosted [here](https://thecryptochad.github.io/TodoList/).
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Installation
 
-### `npm test`
+In order to run this app localy you must first clone the repository with:
+```sh
+git clone https://github.com/TheCryptoChad/TodoList.git
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Then, navigate inside the directory and install the necessary dependencies with:
+```sh
+npm install
+```
 
-### `npm run build`
+Finally, you can run the app with:
+```sh
+npm start
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Features
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+The app is capable of receiving user input via a Bootstrap `Form` that takes a `Task`, a `Date`, and a `Time` in order to create the list.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+gif
 
-### `npm run eject`
+### Button Functionality
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- #### Submit
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+The `Submit` button targets the user input, turns it into an array based on each input's value and sets the State of `todoList` as a new array where the latest task is added at the end.
+```js
+function addTodo(e) {
+  e.preventDefault();
+  const data = e.target;
+  const newTodo = {
+    task: data.task.value,
+    date: data.date.value,
+    time: data.time.value
+  }
+  setTodoList(todoList => [...todoList, newTodo]);
+}
+``` 
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+gif
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- #### Delete
 
-## Learn More
+The `Delete` button targets the task corresponding to the particular button clicked and uses the `splice()` method to separate that task form the rest of the array based on its index. Since React State is immutable, we must then update the State of `todoList` by replacing it with a new array that uses the `filter()` method to exclude the task that we wanted to remove.
+```js
+function deleteTodo(e) {
+  todoList.splice(e.target.value, 1);
+  setTodoList(todoList =>  todoList.filter((_, i) => i !== e.target.value));
+}
+``` 
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+gif
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### LocalStorage
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+The app is capable of storing the `todoList` array between page refreshes and even browser closes thanks to `localStorage`.
+```js
+const [todoList, setTodoList] = useState(JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || []);
+    
+useEffect(() => {
+  localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(todoList));
+}, [todoList]);
+```
