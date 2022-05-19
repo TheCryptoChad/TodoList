@@ -13,7 +13,7 @@ A fully usable version of the app is hosted [here](https://thecryptochad.github.
 
 ## Installation
 
-In order to run this app localy you must first clone the repository with:
+In order to run this app locally you must first clone the repository with:
 ```sh
 git clone https://github.com/TheCryptoChad/TodoList.git
 ```
